@@ -10,7 +10,7 @@ using The_Four_DressOut_Web.Context;
 
 namespace The_Four_DressOut_Web.Migrations
 {
-    [DbContext(typeof(AppDBContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20260430184825_RegistrationDB")]
     partial class RegistrationDB
     {

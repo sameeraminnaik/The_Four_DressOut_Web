@@ -4,10 +4,10 @@ namespace The_Four_DressOut_Web.DTO
 {
     public class LoginDTO
     {
-
         [Required]
         [EmailAddress]
         public string? Email { get; set; }
+
         [Required]
         [MinLength(6, ErrorMessage = "Password must be at least 6 characters long.")]
         public string? Password { get; set; }
@@ -32,10 +32,9 @@ namespace The_Four_DressOut_Web.DTO
         public string Password { get; set; } = string.Empty;
 
         [Required]
-        [System.Text.Json.Serialization.JsonIgnore]
         [Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
 
-        public string Role { get; set; }
+        public string Role { get; set; } = string.Empty;
     }
 }
