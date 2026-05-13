@@ -229,7 +229,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...
 
 **Sameer Aminnaik**  
 Full Stack .NET Developer  
-[GitHub](https://github.com/yourusername) | [LinkedIn](https://linkedin.com/in/yourusername)
+[GitHub](https://github.com/sameeraminnaik) | [LinkedIn](https://www.linkedin.com/in/sameer-aminnaik-212903352/)
 
 ---
 
