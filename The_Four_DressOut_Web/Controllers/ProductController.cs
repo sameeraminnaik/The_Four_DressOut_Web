@@ -69,13 +69,17 @@ namespace The_Four_DressOut_Web.Controllers
 
             return Ok(products);
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var product = await _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Seller)
                 .FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound("Product not found");
+            }
             return Ok(product);
 
         }
@@ -101,7 +105,7 @@ namespace The_Four_DressOut_Web.Controllers
             await _context.SaveChangesAsync();
             return Ok(product);
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         [Authorize(Roles = "Seller")]
         public async Task<IActionResult> Update(int id, [FromBody] Product dto)
         {
@@ -126,7 +130,7 @@ namespace The_Four_DressOut_Web.Controllers
             await _context.SaveChangesAsync();
             return Ok(product);
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize(Roles = "Seller")]
         public async Task<IActionResult> Delete(int id)
         {
