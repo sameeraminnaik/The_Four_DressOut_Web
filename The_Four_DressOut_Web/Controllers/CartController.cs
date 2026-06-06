@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -19,6 +20,7 @@ namespace The_Four_DressOut_Web.Controllers
 
         // GET: api/Cart
         [HttpGet]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetCart()
         {
             var customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -46,6 +48,7 @@ namespace The_Four_DressOut_Web.Controllers
 
         // POST: api/Cart
         [HttpPost]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> AddToCart([FromBody] CartItem dto)
         {
             var customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -90,6 +93,7 @@ namespace The_Four_DressOut_Web.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateQuantity(int id, [FromBody] CartItem dto)
         {
             var customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -105,6 +109,7 @@ namespace The_Four_DressOut_Web.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> RemoveFromCart(int id)
         {
             var customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -119,6 +124,7 @@ namespace The_Four_DressOut_Web.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> ClearCart()
         {
             var customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
