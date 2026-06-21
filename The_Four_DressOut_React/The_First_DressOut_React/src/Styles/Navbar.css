@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.nav-container{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(0, 0, 0);
+}
+
+.nav-logo{
+    color: rgb(127, 6, 6);
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-menu{
+    display: flex;
+    flex-direction: row;
+    margin-left: 210px;
+    width: 73%;
+}
+
+.nav-item{
+    list-style: none;    
+    margin-left: 60px;
+    justify-content: space-evenly;
+    align-items: center;
+}

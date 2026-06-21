@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.IdentityModel.Tokens.Experimental;
 using System.Text;
 using The_Four_DressOut_Web.Context;
 
@@ -41,6 +40,16 @@ public partial class Program
             options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         });
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowReact",
+                policy => policy.WithOrigins("http://localhost:5173")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod());
+        });
+
+        
+
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -55,7 +64,10 @@ public partial class Program
             app.UseSwaggerUI();
         }
 
+
         app.UseHttpsRedirection();
+        app.UseCors("AllowReact");
+
 
         app.UseAuthentication();
 

@@ -86,7 +86,7 @@ namespace The_Four_DressOut_Web.Controllers
             };
 
             // Generate a symmetric security key and signing credentials
-            var Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]));
+            var Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
             var creds = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
 
             // Create the JWT token with the specified claims, issuer, audience, and expiration
@@ -94,7 +94,7 @@ namespace The_Four_DressOut_Web.Controllers
                 issuer: _config["JwtSettings:Issuer"],
                 audience : _config["JwtSettings:Audience"],
                 claims: claims,
-                expires : DateTime.UtcNow.AddDays(int.Parse(_config["JwtSettings:ExpiryInDays"])),
+                expires : DateTime.UtcNow.AddDays(int.Parse(_config["JwtSettings:ExpiryInDays"]!)),
                 signingCredentials: creds
                 );
 
