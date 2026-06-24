@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,37 +10,46 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const token = localStorage.getItem("token");
+  const name = localStorage.getItem("name");
+
   return (
     <>
       <nav className={styles.navbar}>
-        <Link to="/">
+        <NavLink to="/">
           <img src={logo} alt="Logo" className={styles.logo} />
-        </Link>
+        </NavLink>
 
         <ul className={styles.navLinks}>
           <li>
-            <Link to="/">Home</Link>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li>
-            <Link to="/men">Men</Link>
+            <NavLink to="/men">Men</NavLink>
           </li>
           <li>
-            <Link to="/women">Women</Link>
+            <NavLink to="/women">Women</NavLink>
           </li>
           <li>
-            <Link to="/newarrivals">New Arrivals</Link>
+            <NavLink to="/newarrivals">New Arrivals</NavLink>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>
+            <NavLink to="/contact">Contact</NavLink>
           </li>
         </ul>
 
         <div className={styles.actions}>
           <input type="text" placeholder="Search..." />
-          <Link className={styles.loginBtn} to="/login">
-            Login
-          </Link>
-          <button className={styles.cartBtn}>Cart</button>
+          <NavLink className={styles.loginBtn} to="/login">
+            {!token ? (
+              <button className={styles.cartBtn}>Login</button>
+            ) : (
+              <span className={styles.cartBtn}>{name}</span>
+            )}
+          </NavLink>
+          <NavLink to="/cart">
+            <button className={styles.cartBtn}>Cart</button>
+          </NavLink>
         </div>
 
         <button className={styles.hamburger} onClick={toggleMenu}>
@@ -51,22 +60,25 @@ const Navbar = () => {
 
         {menuOpen && (
           <div className={styles.mobileMenu}>
-            <Link to="/" onClick={() => setMenuOpen(false)}>
+            <NavLink to="/" onClick={() => setMenuOpen(false)}>
               Home
-            </Link>
-            <Link to="/shop" onClick={() => setMenuOpen(false)}>
-              Shop
-            </Link>
-            <Link to="/shop" onClick={() => setMenuOpen(false)}>
+            </NavLink>
+            <NavLink to="/men" onClick={() => setMenuOpen(false)}>
               Men
-            </Link>
-            <Link to="/shop" onClick={() => setMenuOpen(false)}>
+            </NavLink>
+            <NavLink to="/women" onClick={() => setMenuOpen(false)}>
               Women
-            </Link>
-            <Link to="/shop" onClick={() => setMenuOpen(false)}>
+            </NavLink>
+            <NavLink to="/newarrivals" onClick={() => setMenuOpen(false)}>
+              New Arrivals
+            </NavLink>
+            <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
               Contact
-            </Link>
-            <button className={styles.loginBtn}>Login</button>
+            </NavLink>
+
+            <NavLink to="/login" className={styles.loginBtn}>
+              Login
+            </NavLink>
           </div>
         )}
       </nav>

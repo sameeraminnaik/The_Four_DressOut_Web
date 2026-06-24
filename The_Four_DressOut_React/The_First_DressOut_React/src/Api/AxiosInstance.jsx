@@ -1,8 +1,7 @@
-import React from "react";
 import axios from "axios";
 
 const AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "https://localhost:7256",
+  baseURL: import.meta.env.VITE_API_URL || "https://localhost:7256",
   headers: {
     "Content-Type": "application/json",
   },
@@ -26,8 +25,6 @@ AxiosInstance.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      window.location.href = "/Auth";
     }
     return Promise.reject(error);
   },

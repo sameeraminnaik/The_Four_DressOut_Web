@@ -14,7 +14,7 @@ const Men = () => {
         <section className={styles.products}>
           <div className={styles.grid}>
             {products
-              .filter((product) => product.category === "Men")
+              .filter((product) => product.categoryId === 1 )
               .map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

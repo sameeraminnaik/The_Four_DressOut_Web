@@ -3,16 +3,11 @@ import styles from "./NewArrivals.module.css";
 import products from "../../data/products";
 import ProductCard from "../../components/ProductCard/ProductCard";
 
-/* Doutbfull
-1. Product is not showing up in the new arrivals section even though it is marked as new in the data.
-2. The filtering logic for new products is not working correctly, resulting in an empty list of new arrivals.
-*/
-
 const NewArrivals = () => {
   const newProducts = products.filter((product) => product.isNew === true);
-  const newMen = newProducts.filter((product) => product.category === "Men");
+  const newMen = newProducts.filter((product) => product.categoryId === 1);
   const newWomen = newProducts.filter(
-    (product) => product.category === "Women",
+    (product) => product.categoryId === 2,
   );
 
   return (

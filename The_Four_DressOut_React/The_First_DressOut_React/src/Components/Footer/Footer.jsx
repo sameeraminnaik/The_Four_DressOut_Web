@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Footer.module.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 
 const Footer = () => {
@@ -15,10 +15,10 @@ const Footer = () => {
           <div className={styles.links}>
             <h4>Shops</h4>
             <ul>
-              <NavLink to="./men"><li>Men</li></NavLink>
-              <NavLink to="./women"><li>Women</li></NavLink>
-              <NavLink to="./newarrivals"><li>New Arrivals</li></NavLink>
-              <li>Sale</li>
+              <NavLink to="/men"><li>Men</li></NavLink>
+              <NavLink to="/women"><li>Women</li></NavLink>
+              <NavLink to="/newarrivals"><li>New Arrivals</li></NavLink>
+              <NavLink to="/sale"><li>Sale</li></NavLink>
             </ul>
           </div>
 
@@ -28,7 +28,7 @@ const Footer = () => {
               <li>About Us</li>
               <li>Careers</li>
               <li>Press</li>
-              <li>Contact</li>
+              <NavLink to="/contact"><li>Contact</li></NavLink>
             </ul>
           </div>
 

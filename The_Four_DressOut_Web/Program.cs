@@ -10,9 +10,23 @@ public partial class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        var myAllowReactOrigins = "_myAllowReactOrigins";
+
+        
+
         // Configure the database connection
         builder.Services.AddDbContext<AppDbContext>(options =>
                    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        // Configure CORS to allow requests from the React frontend
+        builder.Services.AddCors(options => {
+            options.AddPolicy(name: myAllowReactOrigins, policy =>
+            {
+                policy.WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
+        });
 
         // Configure JWT authentication  (Can't able to see the output in postman)....
         var jwtKey = builder.Configuration["JwtSettings:Key"]
@@ -39,15 +53,6 @@ public partial class Program
         {
             options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         });
-
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy("AllowReact",
-                policy => policy.WithOrigins("http://localhost:5173")
-                                .AllowAnyHeader()
-                                .AllowAnyMethod());
-        });
-
         
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -64,10 +69,9 @@ public partial class Program
             app.UseSwaggerUI();
         }
 
+        app.UseCors(myAllowReactOrigins);
 
-        app.UseHttpsRedirection();
-        app.UseCors("AllowReact");
-
+        //app.UseHttpsRedirection();
 
         app.UseAuthentication();
 
