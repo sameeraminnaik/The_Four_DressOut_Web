@@ -16,6 +16,7 @@ namespace The_Four_DressOut_Web.Model
         public string Size { get; set; } = string.Empty;
         public string Color { get; set; } = string.Empty;
         public int Quantity { get; set; }
+        public string? Image { get; set; }
 
     }
 }

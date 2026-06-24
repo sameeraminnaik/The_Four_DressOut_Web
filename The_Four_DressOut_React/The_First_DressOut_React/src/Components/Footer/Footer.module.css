@@ -1,0 +1,61 @@
+.footer {
+  background-color: #111111;
+  color: #ffffff;
+  padding: 60px 60px 20px 60px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.brand h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #d4af37;
+}
+
+.brand p {
+  color: #aaaaaa;
+  font-size: 0.95rem;
+}
+
+.links h4 {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: #d4af37;
+}
+
+.links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.links ul li {
+  color: #aaaaaa;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.links ul li:hover {
+  color: #ffffff;
+}
+
+.bottom {
+  border-top: 1px solid #333333;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.bottom p {
+  color: #666666;
+  font-size: 0.85rem;
+}

@@ -29,5 +29,6 @@ namespace The_Four_DressOut_Web.DTO
 
         [Required]
         public int CategoryId { get; set; }
+        public string? Image { get; set; }
     }
 }

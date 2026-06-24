@@ -1,0 +1,182 @@
+.container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-gray);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.imageContainer {
+    width: 50%;
+    max-width: 500px;
+    height: 650px;
+    overflow: hidden;
+    border-radius: 12px 0 0 12px;
+}
+
+.imageContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.formContainer {
+    width: 50%;
+    max-width: 450px;
+    height: 650px;
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px 50px;
+    box-sizing: border-box;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.logo img {
+    width: 100%;
+    height: 170px;
+}
+
+.formTitle {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: var(--dark-gray);
+    font-weight: 500;
+}
+
+.formInput {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: var(--transition);
+    box-sizing: border-box;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.formInput:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+.loginButton {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 15px;
+}
+
+.loginButton:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.addOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.forgotPassword {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.forgotPassword:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.registerLink {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.registerLink:hover {
+    text-decoration: underline;
+}
+
+.footerLinks {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    gap: 15px;
+}
+
+.termsLink,
+.privacyLink {
+    color: var(--dark-gray);
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.termsLink:hover,
+.privacyLink:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .imageContainer {
+        width: 100%;
+        max-width: 500px;
+        height: 300px;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .formContainer {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        border-radius: 0 0 12px 12px;
+        padding: 40px 30px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .logo img {
+        height: 60px;
+    }
+
+    .formTitle {
+        font-size: 18px;
+    }
+
+    .formInput {
+        padding: 12px;
+    }
+
+    .loginButton {
+        padding: 12px;
+    }
+}

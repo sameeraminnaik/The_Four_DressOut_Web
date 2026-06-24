@@ -16,5 +16,6 @@ namespace The_Four_DressOut_Web.DTO
         [Required]
         [Range(1, 10000, ErrorMessage = "Quantity must be at least 1")]
         public int Quantity { get; set; }
+        public string? Image { get; set; }
     }
 }

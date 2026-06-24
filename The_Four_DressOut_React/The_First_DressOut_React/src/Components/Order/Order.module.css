@@ -1,0 +1,102 @@
+/* Place Order Section */
+.placeOrder {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.placeOrder h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.placeOrder p {
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.placeOrder button {
+  padding: 0.85rem 2rem;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.placeOrder button:hover { background: #333; }
+.placeOrder button:disabled { background: #aaa; cursor: not-allowed; }
+
+.success { color: green; font-weight: 600; }
+.error   { color: red;   font-weight: 600; }
+
+/* My Orders */
+.myOrders h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.orderCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  margin-bottom: 1.2rem;
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.date   { font-size: 0.85rem; color: #888; margin-top: 0.2rem; }
+.right  { text-align: right; }
+.total  { font-weight: 700; margin-top: 0.3rem; }
+
+/* Status badge */
+.status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.pending   { background: #fff3cd; color: #856404; }
+.shipped   { background: #cfe2ff; color: #084298; }
+.delivered { background: #d1e7dd; color: #0f5132; }
+.cancelled { background: #f8d7da; color: #842029; }
+
+/* Order items */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.itemName  { font-weight: 600; flex: 1; }
+.itemMeta  { font-size: 0.85rem; color: #888; flex: 1; text-align: center; }
+.itemPrice { font-weight: 700; }
+
+.cancelBtn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #fff;
+  color: #c0392b;
+  border: 1px solid #c0392b;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cancelBtn:hover { background: #c0392b; color: #fff; }
