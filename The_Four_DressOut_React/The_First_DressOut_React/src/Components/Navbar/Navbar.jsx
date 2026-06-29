@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../../assets/logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate("/login");
   };
 
   const token = localStorage.getItem("token");
@@ -19,6 +25,8 @@ const Navbar = () => {
         <NavLink to="/">
           <img src={logo} alt="Logo" className={styles.logo} />
         </NavLink>
+
+        <div>{token ? <span>{name}</span> : null}</div>
 
         <ul className={styles.navLinks}>
           <li>
@@ -40,13 +48,15 @@ const Navbar = () => {
 
         <div className={styles.actions}>
           <input type="text" placeholder="Search..." />
-          <NavLink className={styles.loginBtn} to="/login">
-            {!token ? (
+          {!token ? (
+            <NavLink className={styles.loginBtn} to="/login">
               <button className={styles.cartBtn}>Login</button>
-            ) : (
-              <span className={styles.cartBtn}>{name}</span>
-            )}
-          </NavLink>
+            </NavLink>
+          ) : (
+            <button className={styles.cartBtn} onClick={handleLogOut}>
+              LogOut
+            </button>
+          )}
           <NavLink to="/cart">
             <button className={styles.cartBtn}>Cart</button>
           </NavLink>

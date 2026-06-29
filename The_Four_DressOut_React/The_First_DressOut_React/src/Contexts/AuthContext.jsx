@@ -4,6 +4,12 @@ import { loginUser, registerUser } from "../Services/authService";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+
+  const [seller, setSeller] = useState(()=>{
+    const saved = localStorage.getItem("seller");
+    return saved ? JSON.parse(saved) : null;
+  })
+
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem("user");
     return saved ? JSON.parse(saved) : null;
@@ -61,7 +67,7 @@ export const AuthProvider = ({ children }) => {
       const data = await registerUser(formData);
       return data;
     } catch (error) {
-      setAuthError(error.response?.data || "Registration failed" );
+      setAuthError(error.response?.data || "Registration failed");
       throw error;
     } finally {
       setAuthLoading(false);

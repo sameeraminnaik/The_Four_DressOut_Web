@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import styles from "./AddProduct.module.css";
 import { NavLink } from "react-router-dom";
+import { addProduct } from "../../Api/sellerApi";
+import products from "../../Data/products";
 
 const AddProduct = () => {
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
-    title: "",
+    name: "",
     description: "",
     price: "",
+    size: "",
     stock: "",
-    img: "",
+    color: "",
+    image:"",
+    categoryId: "",
   });
 
   const handleChange = (e) => {
@@ -21,12 +26,24 @@ const AddProduct = () => {
     }));
   };
 
-  
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    try {
+      const res = await addProduct(formData);
+      console.log(res);
+      
+      
+    } catch (err) {
+      console.log(err.response.data);
+      console.log(err.response.data.errors);
+    }
   };
 
+  const handleAddProduct = async () => {
+    const res = await addProduct(formData);
+    console.log(res);
+  };
   const onImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -39,34 +56,52 @@ const AddProduct = () => {
       }));
     }
   };
-
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           type="text"
-          name="title"
+          name="name"
           placeholder="Product Title"
           onChange={handleChange}
-        ></input>
+        />
         <input
           type="text"
           name="description"
           placeholder="Add your product description"
           onChange={handleChange}
-        ></input>
+        />
         <input
           type="number"
           name="price"
           placeholder="Product Price"
           onChange={handleChange}
-        ></input>
+        />
         <input
           type="number"
           name="stock"
           placeholder="Stock"
           onChange={handleChange}
-        ></input>
+        />
+        <input
+          type="number"
+          name="categoryId"
+          value={formData.categoryId}
+          onChange={handleChange}
+          placeholder="Category ID"
+        />
+        <input
+          type="text"
+          name="size"
+          placeholder="Size"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="color"
+          placeholder="Colour"
+          onChange={handleChange}
+        />
         <input
           name="img"
           type="file"
@@ -80,7 +115,9 @@ const AddProduct = () => {
         <button type="submit" className={styles.addBtn}>
           Add Product
         </button>
+        
       </form>
+      
     </>
   );
 };

@@ -1,7 +1,7 @@
 import {React,useState} from "react";
 import styles from "./Shop.module.css";
 import ProductCard from "../../Components/ProductCard/ProductCard";
-import products from "../../data/products.js";
+import products from "../../data/products";
 
 const categories = ["All", "Men", "Women"];
 const Shop = () => {

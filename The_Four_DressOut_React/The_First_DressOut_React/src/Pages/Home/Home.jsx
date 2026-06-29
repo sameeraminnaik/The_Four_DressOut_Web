@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import ProductCard from "../../Components/ProductCard/ProductCard";
-import products from "../../data/products.js";
+  import { products } from "../../data/products";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [allProducts, setAllProducts] = useState([]);
+  useEffect(() => {
+    const load= async ()=> {
+      const data = await products();
+      setAllProducts(data)
+    }
+    load();
+  }, [])
+  
   return (
     <>
       <section className={styles.hero}>
@@ -23,8 +32,11 @@ const Home = () => {
       <section className={styles.featured}>
         <h2>Featured Products</h2>
         <div className={styles.grid}>
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+         {allProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+            />
           ))}
         </div>
       </section>

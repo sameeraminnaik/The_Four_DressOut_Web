@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Cart.module.css";
 import ProductCard from "../../Components/ProductCard/ProductCard";
-import products from "../../data/products.js";
+import products from "../../data/products";
 import remove from "../../assets/remove.png";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";

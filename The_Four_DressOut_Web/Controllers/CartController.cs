@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using The_Four_DressOut_Web.Context;
+using The_Four_DressOut_Web.DTO;
 using The_Four_DressOut_Web.Model;
 
 namespace The_Four_DressOut_Web.Controllers
@@ -49,7 +50,7 @@ namespace The_Four_DressOut_Web.Controllers
         // POST: api/Cart
         [HttpPost]
         [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> AddToCart([FromBody] CartItem dto)
+        public async Task<IActionResult> AddToCart([FromBody] CartItemDTO dto)
         {
             var customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
@@ -64,7 +65,7 @@ namespace The_Four_DressOut_Web.Controllers
             }
 
             var existing = await _context.CartItems.FirstOrDefaultAsync(
-                c => c.CustomerId == dto.CustomerId && 
+                c => c.CustomerId == customerId && 
                 c.ProductId == dto.ProductId && 
                 c.Size == dto.Size &&
                 c.Color == dto.Color
@@ -92,6 +93,7 @@ namespace The_Four_DressOut_Web.Controllers
             return Ok("Item added to cart");
         }
 
+        // Put: /api/Cart/id
         [HttpPut("{id}")]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateQuantity(int id, [FromBody] CartItem dto)

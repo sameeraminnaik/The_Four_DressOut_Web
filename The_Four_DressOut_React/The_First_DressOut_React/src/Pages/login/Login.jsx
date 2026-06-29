@@ -18,6 +18,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    role:""
   });
 
   const [errors, setErrors] = useState({});
@@ -52,11 +53,11 @@ const Login = () => {
       const data = await loginUser(formData.email, formData.password);
 
       localStorage.setItem("token", data.token);
-      localStorage.setItem("email", data.email);
       localStorage.setItem("name", data.name);
+      const role =localStorage.setItem("role", data.role);
 
       alert(`Welcome back, ${data.name}!`);
-      navigate("/");
+      navigate("/")
     } catch (error) {
       alert(error.response?.data || "Invalid email or password");
     } finally {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using The_Four_DressOut_Web.Context;
+using The_Four_DressOut_Web.DTO;
 using The_Four_DressOut_Web.Model;
 
 namespace The_Four_DressOut_Web.Controllers
@@ -19,8 +20,10 @@ namespace The_Four_DressOut_Web.Controllers
             _context = context;
         }
 
+
+        
         // GET api/product — Anyone can view
-        [HttpGet]
+        [HttpGet ("getAllProduct")]
         public async Task<IActionResult> GetAll(
             [FromQuery] string? category,
             [FromQuery] string? size,
@@ -62,6 +65,7 @@ namespace The_Four_DressOut_Web.Controllers
                 p.Size,
                 p.Color,
                 p.Stock,
+                p.Image,
                 p.CreatedAt,
                 Category = p.Category!.Name,
                 Seller = p.Seller!.FirstName + " " + p.Seller.LastName
@@ -69,6 +73,7 @@ namespace The_Four_DressOut_Web.Controllers
 
             return Ok(products);
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -83,12 +88,18 @@ namespace The_Four_DressOut_Web.Controllers
             return Ok(product);
 
         }
-        [HttpPost]
+
+        [HttpPost("addpost")]
         [Authorize(Roles = "Seller")]
-        public async Task<IActionResult> Create([FromBody] Product dto)
+        public async Task<IActionResult> Create([FromBody] ProductDTO dto)
         {
             var sellerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
             var category = await _context.Categories.FindAsync(dto.CategoryId);
+
+            if (category == null)
+                return BadRequest("Invalid category.");
+
             var product = new Product
             {
                 Name = dto.Name,
@@ -97,14 +108,18 @@ namespace The_Four_DressOut_Web.Controllers
                 Size = dto.Size,
                 Color = dto.Color,
                 Stock = dto.Stock,
-                CategoryId = category!.Id,
+                CategoryId = dto.CategoryId,
+                Image = dto.Image,
                 SellerId = sellerId,
                 CreatedAt = DateTime.UtcNow
             };
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
+
             return Ok(product);
         }
+
         [HttpPut("{id}")]
         [Authorize(Roles = "Seller")]
         public async Task<IActionResult> Update(int id, [FromBody] Product dto)
