@@ -20,7 +20,7 @@ namespace The_Four_DressOut_Web.Controllers
         }
 
         // GET: api/Cart
-        [HttpGet]
+        [HttpGet ("getCart")]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetCart()
         {
@@ -36,7 +36,7 @@ namespace The_Four_DressOut_Web.Controllers
                     c.Color,
                     c.Quantity,
                     Product = c.Product!.Name,
-                    Price = c.Product!.Price,
+                    c.Product!.Price,
                     Total = c.Product!.Price * c.Quantity
                 })
                 .ToListAsync();
@@ -48,7 +48,7 @@ namespace The_Four_DressOut_Web.Controllers
         }
 
         // POST: api/Cart
-        [HttpPost]
+        [HttpPost ("addToCart")]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> AddToCart([FromBody] CartItemDTO dto)
         {

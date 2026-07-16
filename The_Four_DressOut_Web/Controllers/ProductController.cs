@@ -91,7 +91,7 @@ namespace The_Four_DressOut_Web.Controllers
 
         [HttpPost("addpost")]
         [Authorize(Roles = "Seller")]
-        public async Task<IActionResult> Create([FromBody] ProductDTO dto)
+        public async Task<IActionResult> Create([FromForm] ProductDTO dto)
         {
             var sellerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 

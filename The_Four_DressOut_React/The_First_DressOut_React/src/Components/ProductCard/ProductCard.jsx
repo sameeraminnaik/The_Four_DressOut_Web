@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ProductCard.module.css";
 import { useNavigate } from "react-router-dom";
 import productDesc from "../productDescription/ProductDesc";
+import { placeCartItem } from "../../Api/cartApiService";
 
 const ProductCard = ({ product }) => {
+  const [cartItem, setCartItem] = useState(() => {
+    const storedCart = localStorage.getItem("cartItems");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
   const navigate = useNavigate();
 
   const handleProductDesc = () => {
@@ -18,20 +23,32 @@ const ProductCard = ({ product }) => {
     }
   };
 
-  const handleAddToCart = () => {
-    // console.log(`Added ${product.name} to cart!`);
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const existingItemIndex = cartItems.findIndex(
+  const handleAddToCart = async () => {
+    const updatedCart = [...cartItem];
+    const existingItemIndex = updatedCart.findIndex(
       (item) => item.id === product.id,
     );
-    if (existingItemIndex !== -1) {
-      cartItems[existingItemIndex].quantity += 1;
-    } else {
-      cartItems.push({ ...product, quantity: 1 });
-    }
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  };
 
+    if (existingItemIndex !== -1) {
+      updatedCart[existingItemIndex].quantity += 1;
+    } else {
+      updatedCart.push({ ...product, quantity: 1 });
+    }
+
+    setCartItem(updatedCart);
+    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+
+    try {
+      await placeCartItem({
+        productId: product.id,
+        size: product.size,
+        color: product.color,
+        quantity: 1,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <div className={styles.card}>

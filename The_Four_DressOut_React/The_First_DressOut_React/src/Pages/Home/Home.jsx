@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import ProductCard from "../../Components/ProductCard/ProductCard";
-  import { products } from "../../data/products";
+import { products } from "../../data/products";
+
 
 const Home = () => {
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState([]);
-  useEffect(() => {
-    const load= async ()=> {
+  const load= async () => {
       const data = await products();
-      setAllProducts(data)
+      setAllProducts(Array.isArray(data) ? data : [])
     }
+  useEffect(() => {
     load();
   }, [])
   

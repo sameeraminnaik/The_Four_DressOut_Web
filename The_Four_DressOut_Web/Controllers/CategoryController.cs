@@ -18,7 +18,7 @@ namespace The_Four_DressOut_Web.Controllers
         }
 
         // GET: api/Category
-        [HttpGet]
+        [HttpGet ("getAllCategories")]
         public async Task<IActionResult> GetAll()
         {
             var categories = await _context.Categories.ToListAsync();
