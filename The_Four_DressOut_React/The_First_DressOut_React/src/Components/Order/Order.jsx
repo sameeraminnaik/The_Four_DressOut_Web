@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Order.module.css";
 import { placeOrder, getMyOrders, cancelOrder } from "../../Api/apiService";
+import { getCart } from "../../Api/cartApiService";
 
 const Order = () => {
   // const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -53,12 +54,19 @@ const Order = () => {
   //   return <p>Your cart is empty. Add items before ordering.</p>;
   // }
 
+  const [cart, setCart] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  const loadCart = async () => {
+      const data = await getCart();
+      setCart(data.cartItems || []);
+    };
+
   useEffect(() => {
+    loadCart();
     fetchOrders();
   }, []);
 
@@ -102,14 +110,32 @@ const Order = () => {
 
       {/* PLACE ORDER */}
       <div className={styles.placeOrder}>
-        <h2>Ready to Order?</h2>
-        <p>Your cart items are saved. Click below to place your order.</p>
+
+        <div className={styles.summary}>
+          <h2>Your Orders</h2>
+          <div>{cart.map((item)=>(
+          <div key={item.id} className={styles.cartItem}>
+            <p>{item.product}</p>
+            <p>{item.color}</p>
+            <p>{item.size}</p>
+            <p>{item.quantity}</p>
+            <p>₹{item.price.toLocaleString()}</p>
+          </div>
+        ))}</div>
+        </div>
+        
+        
         {message && <p className={styles.success}>{message}</p>}
         {error && <p className={styles.error}>{error}</p>}
         <button onClick={handlePlaceOrder} disabled={loading}>
           {loading ? "Placing Order..." : "Place Order"}
         </button>
       </div>
+
+
+
+
+
 
       {/* MY ORDERS */}
       <div className={styles.myOrders}>

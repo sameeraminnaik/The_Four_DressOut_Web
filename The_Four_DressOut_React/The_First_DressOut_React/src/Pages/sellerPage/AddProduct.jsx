@@ -2,11 +2,26 @@ import React, { useEffect, useState } from "react";
 import styles from "./AddProduct.module.css";
 import { NavLink } from "react-router-dom";
 import { addProduct, getAllCategories } from "../../Api/sellerApi";
+import cart from "../../Assets/cartTemp.webp";
+import order from "../../Assets/orderTemp.png";
+import revenue from "../../Assets/salesTemp.webp";
+import rating from "../../Assets/ratingTemp.png";
+import lowStock from "../../Assets/lowCostTemp.webp";
 import products from "../../Data/products";
 
 const AddProduct = () => {
   const [image, setImage] = useState(null);
   const [categories, setCategories] = useState([]);
+
+  const [countProducts, setCountProducts] = useState(0);
+
+  const loadProducts = async () => {
+    const res = await products();
+    setCountProducts(res.length);
+  }
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -47,6 +62,7 @@ const AddProduct = () => {
         console.log("Status:", err.response.status);
         console.log("Data:", err.response.data);
         console.log("Errors:", err.response.data?.errors);
+        console.log(JSON.stringify(err.response.data, null, 2));
       } else {
         console.log("Message:", err.message);
       }
@@ -65,11 +81,63 @@ const AddProduct = () => {
       ...prev,
       image: file,
     }));
+   const reader = new FileReader();
+   reader.onloadend = () => {
+    const base64Url = reader.result;
     setImage(URL.createObjectURL(file));
+   }
+    reader.readAsDataURL(file);
+
   }
 };
   return (
     <>
+      <div className={styles.dashboard}>
+        <div className={styles.main}>
+          <div>
+            <img src={cart} alt="Cart" />
+            <h3>Total Products</h3>
+            <h1>{countProducts}</h1>
+          </div>  
+        </div>
+      </div>
+
+      <div className={styles.dashboard}>
+        <div className={styles.main}>
+          <div>
+            <img src={order} alt="Order" />
+            <h3>Total Orders</h3>
+          </div>  
+        </div>
+      </div>
+
+      <div className={styles.dashboard}>
+        <div className={styles.main}>
+          <div>
+            <img src={revenue} alt="Revenue" />
+            <h3>Total Revenues</h3>
+          </div>  
+        </div>
+      </div>
+
+      <div className={styles.dashboard}>
+        <div className={styles.main}>
+          <div>
+            <img src={rating} alt="Rating" />
+            <h3>Average Rating</h3>
+          </div>  
+        </div>
+      </div>
+
+      <div className={styles.dashboard}>
+        <div className={styles.main}>
+          <div>
+            <img src={lowStock} alt="Low Stock" />
+            <h3>Low Stock Products</h3>
+          </div>  
+        </div>
+      </div>
+
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           type="text"
@@ -97,13 +165,14 @@ const AddProduct = () => {
         />
         <select
           value={formData.categoryId}
-          onChange={(e) =>
-            setFormData({ ...formData, categoryId: e.target.value })
-          }
+          onChange={(e) => {
+            console.log(e.target.value);
+            console.log(typeof e.target.value);
+            setFormData({ ...formData, categoryId: e.target.value });
+          }}
           name="categoryId"
-          placeholder="Select Category"
         >
-          <option value="">Select Category</option>
+          <option value="">Select Gender</option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -125,7 +194,6 @@ const AddProduct = () => {
         <input
           name="image"
           type="file"
-          accept="image/*"
           onChange={onImageChange}
         />
         {image && (

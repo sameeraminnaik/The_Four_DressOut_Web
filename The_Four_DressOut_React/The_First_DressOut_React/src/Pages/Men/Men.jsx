@@ -1,9 +1,20 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import styles from "./Men.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import products from "../../data/products";
+import { products } from "../../data/products";
 
 const Men = () => {
+  const [menProducts, setMenProducts] = useState([]);
+  const load = async () => {
+    const data = await products();
+    setMenProducts(Array.isArray(data) ? data : []);
+  };
+
+  useEffect(() => {
+    load();
+  }, []);
+
   return (
     <>
       <div className={styles.menPage}>
@@ -13,10 +24,10 @@ const Men = () => {
 
         <section className={styles.products}>
           <div className={styles.grid}>
-            {products
-              .filter((product) => product.categoryId === 1 )
-              .map((product) => (
-                <ProductCard key={product.id} product={product} />
+            {menProducts
+              .filter((item) => item.categoryId == 1)
+              .map((item) => (
+                <ProductCard key={item.id} product={item} />
               ))}
           </div>
         </section>

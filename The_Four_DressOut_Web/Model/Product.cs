@@ -15,7 +15,7 @@ namespace The_Four_DressOut_Web.Model
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category? Category { get; set; }
-        public string? Image { get; set; }
+        public string Image { get; set; }
         public int SellerId { get; set; }
         [ForeignKey("SellerId")]
         public User? Seller { get; set; }

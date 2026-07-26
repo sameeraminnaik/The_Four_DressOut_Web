@@ -10,15 +10,19 @@ const ProductCard = ({ product }) => {
     return storedCart ? JSON.parse(storedCart) : [];
   });
   const navigate = useNavigate();
+  
+  const image = `https://localhost:7256${product.image}`;
+  
+  console.log(product.categoryId)
+
 
   const handleProductDesc = () => {
     // console.log(`Clicked on ${product.name}`);
     localStorage.setItem("selectedProduct", JSON.stringify(product));
-
     // navigate(`./productdesc/${product.id}`);
-    if (product.categoryId === 1 && "./men") {
+    if (product.categoryId == 1 && "./men") {
       navigate(`/productdesc/${product.id}`);
-    } else if (product.categoryId === 2 && "./women") {
+    } else if (product.categoryId == 2 && "./women") {
       navigate(`/productdesc/${product.id}`);
     }
   };
@@ -44,6 +48,7 @@ const ProductCard = ({ product }) => {
         size: product.size,
         color: product.color,
         quantity: 1,
+        image: product.image,
       });
     } catch (error) {
       console.error(error);
@@ -54,9 +59,9 @@ const ProductCard = ({ product }) => {
       <div className={styles.card}>
         <div onClick={handleProductDesc}>
           <div className={styles.imageWrapper}>
-            <img src={product.image} alt={product.name} />
+            <img src={image} alt={product.name} />
             <span className={styles.category}>
-              {product.categoryId === 1 ? "Men" : "Women"}
+              {product.categoryId === "1" ? "Men" : "Women"}
             </span>
           </div>
 
@@ -67,7 +72,9 @@ const ProductCard = ({ product }) => {
         </div>
 
         <div className={styles.info}>
-          <button onClick={handleAddToCart}>Add to Cart</button>
+          <button onClick={handleAddToCart}>
+            {handleAddToCart ? "Add to Cart" : "Added"}
+          </button>
         </div>
       </div>
     </>

@@ -1,14 +1,23 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import styles from "./NewArrivals.module.css";
-import products from "../../data/products";
+import { products } from "../../data/products";
 import ProductCard from "../../components/ProductCard/ProductCard";
 
 const NewArrivals = () => {
-  const newProducts = products.filter((product) => product.isNew === true);
+  const [newProducts, setNewProducts] = useState([]);
+
+  const loadNewProducts = async () => {
+    const filteredProducts = await products();
+  };
+
+  useEffect(() => {
+    loadNewProducts();
+  }, []);
+
   const newMen = newProducts.filter((product) => product.categoryId === 1);
-  const newWomen = newProducts.filter(
-    (product) => product.categoryId === 2,
-  );
+
+  const newWomen = newProducts.filter((product) => product.categoryId === 2);
 
   return (
     <div className={styles.newArrivals}>

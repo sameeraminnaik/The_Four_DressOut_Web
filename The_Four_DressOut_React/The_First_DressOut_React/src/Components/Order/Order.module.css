@@ -1,102 +1,240 @@
-/* Place Order Section */
+/* ── Order.module.css ────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap');
+
+.page {
+  --primary-color: #111111;
+  --secondary-color: #ffffff;
+  --accent-color: #d4af37;
+  --light-gray: #f5f5f5;
+  --dark-gray: #555555;
+  --max-width: 1280px;
+  --transition: 0.3s ease;
+
+  font-family: 'Jost', sans-serif;
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  min-height: 100vh;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+.page h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 1.7rem;
+  letter-spacing: 0.3px;
+  margin: 0 0 1.4rem;
+}
+
+/* ── Place order ─────────────────────────────────────────────────── */
 .placeOrder {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  margin-bottom: 2rem;
+  border: 1px solid var(--light-gray);
+  padding: 2.4rem 2rem;
+  margin-bottom: 3.5rem;
   text-align: center;
 }
 
-.placeOrder h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
 .placeOrder p {
-  color: #777;
-  margin-bottom: 1rem;
+  color: var(--dark-gray);
+  font-size: 0.85rem;
+  margin-bottom: 1.4rem;
 }
 
 .placeOrder button {
-  padding: 0.85rem 2rem;
-  background: #1a1a1a;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 0.9rem 2.4rem;
+  background: var(--primary-color);
+  color: var(--secondary-color);
+  border: 1px solid var(--primary-color);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
 
-.placeOrder button:hover { background: #333; }
-.placeOrder button:disabled { background: #aaa; cursor: not-allowed; }
+.placeOrder button:hover:not(:disabled) {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--primary-color);
+}
 
-.success { color: green; font-weight: 600; }
-.error   { color: red;   font-weight: 600; }
+.placeOrder button:disabled {
+  background: var(--light-gray);
+  border-color: var(--light-gray);
+  color: var(--dark-gray);
+  cursor: not-allowed;
+}
 
-/* My Orders */
-.myOrders h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
+.success {
+  color: #4a6f4a;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
   margin-bottom: 1rem;
 }
 
+.error {
+  color: #a33;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+/* ── My orders ───────────────────────────────────────────────────── */
+.myOrders > p {
+  color: var(--dark-gray);
+  font-size: 0.85rem;
+}
+
 .orderCard {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.2rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--light-gray);
+  padding: 2rem 0;
+}
+
+.orderCard:last-child {
+  border-bottom: none;
 }
 
 .orderHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 1.4rem;
 }
 
-.date   { font-size: 0.85rem; color: #888; margin-top: 0.2rem; }
-.right  { text-align: right; }
-.total  { font-weight: 700; margin-top: 0.3rem; }
+.orderHeader p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.orderHeader strong {
+  font-weight: 500;
+}
+
+.date {
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dark-gray);
+  margin-top: 0.3rem !important;
+}
+
+.right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.total {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: var(--primary-color);
+}
 
 /* Status badge */
 .status {
   padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
 }
-.pending   { background: #fff3cd; color: #856404; }
-.shipped   { background: #cfe2ff; color: #084298; }
-.delivered { background: #d1e7dd; color: #0f5132; }
-.cancelled { background: #f8d7da; color: #842029; }
+
+.pending {
+  color: var(--dark-gray);
+}
+
+.shipped {
+  color: #8a6d1d;
+}
+
+.delivered {
+  color: #3f6b3f;
+}
+
+.cancelled {
+  color: #a33;
+}
 
 /* Order items */
 .item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--light-gray);
+  gap: 1rem;
 }
 
-.itemName  { font-weight: 600; flex: 1; }
-.itemMeta  { font-size: 0.85rem; color: #888; flex: 1; text-align: center; }
-.itemPrice { font-weight: 700; }
+.itemName {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  flex: 1;
+  margin: 0;
+}
+
+.itemMeta {
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--dark-gray);
+  flex: 1;
+  text-align: center;
+  margin: 0;
+}
+
+.itemPrice {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  margin: 0;
+}
 
 .cancelBtn {
-  margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
-  background: #fff;
-  color: #c0392b;
-  border: 1px solid #c0392b;
-  border-radius: 8px;
-  font-weight: 600;
+  margin-top: 1.4rem;
+  padding: 0.65rem 1.4rem;
+  background: var(--secondary-color);
+  color: #a33;
+  border: 1px solid #a33;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background var(--transition), color var(--transition);
 }
-.cancelBtn:hover { background: #c0392b; color: #fff; }
+
+.cancelBtn:hover {
+  background: #a33;
+  color: var(--secondary-color);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .page {
+    padding: 2.5rem 1.2rem 4rem;
+  }
+
+  .orderHeader {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .right {
+    align-items: flex-start;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .itemMeta {
+    text-align: left;
+  }
+}

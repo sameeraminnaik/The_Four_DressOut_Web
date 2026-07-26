@@ -97,6 +97,31 @@ namespace The_Four_DressOut_Web.Controllers
 
             var category = await _context.Categories.FindAsync(dto.CategoryId);
 
+            string? imagePath = null;
+
+            if (dto.Image != null)
+            {
+                var uploadsFolder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot/images/products");
+
+                Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = Guid.NewGuid() + Path.GetExtension(dto.Image.FileName);
+
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await dto.Image.CopyToAsync(stream);
+                }
+
+                imagePath = "/images/products/" + fileName;
+                Console.WriteLine(Directory.GetCurrentDirectory());
+                Console.WriteLine(filePath);
+            }
+
+
             if (category == null)
                 return BadRequest("Invalid category.");
 
@@ -109,7 +134,7 @@ namespace The_Four_DressOut_Web.Controllers
                 Color = dto.Color,
                 Stock = dto.Stock,
                 CategoryId = dto.CategoryId,
-                Image = dto.Image,
+                Image = imagePath,
                 SellerId = sellerId,
                 CreatedAt = DateTime.UtcNow
             };

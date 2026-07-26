@@ -9,6 +9,7 @@ export const getAllCategories = () => {
 };
 
 export const addProduct = async (formdata) => {
+  const token = localStorage.getItem("token");
   const data = new FormData();
 
   data.append("name", formdata.name);
