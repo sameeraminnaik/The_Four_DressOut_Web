@@ -115,8 +115,9 @@
 /* Footer Links */
 .footerLinks {
   display: flex;
+  margin: 20px 10px;
   justify-content: space-between;
-  margin-top: 20px;
+  gap: 10px;
 }
 
 .termsLink,
@@ -151,7 +152,6 @@
   color: #d4af37;
 }
 
-/* Responsive - Mobile पर video hide होगा */
 @media (max-width: 768px) {
   .videoContainer {
     display: none;

@@ -40,7 +40,7 @@ namespace The_Four_DressOut_Web.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int?>("OrdersId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -57,7 +57,7 @@ namespace The_Four_DressOut_Web.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrdersId");
 
                     b.HasIndex("ProductId");
 
@@ -78,31 +78,6 @@ namespace The_Four_DressOut_Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("The_Four_DressOut_Web.Model.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OrderedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("The_Four_DressOut_Web.Model.OrderItem", b =>
@@ -145,7 +120,35 @@ namespace The_Four_DressOut_Web.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("The_Four_DressOut_Web.Model.Product", b =>
+            modelBuilder.Entity("The_Four_DressOut_Web.Model.Orders", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("The_Four_DressOut_Web.Model.Products", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -168,6 +171,7 @@ namespace The_Four_DressOut_Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -194,6 +198,42 @@ namespace The_Four_DressOut_Web.Migrations
                     b.HasIndex("SellerId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("The_Four_DressOut_Web.Model.RazorModelPayment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateOnly>("CreatedAt")
+                        .HasColumnType("date");
+
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RazorpayOrderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RazorpayPaymentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentItems");
                 });
 
             modelBuilder.Entity("The_Four_DressOut_Web.Model.User", b =>
@@ -240,11 +280,11 @@ namespace The_Four_DressOut_Web.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("The_Four_DressOut_Web.Model.Order", null)
+                    b.HasOne("The_Four_DressOut_Web.Model.Orders", null)
                         .WithMany("OrderItem")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrdersId");
 
-                    b.HasOne("The_Four_DressOut_Web.Model.Product", "Product")
+                    b.HasOne("The_Four_DressOut_Web.Model.Products", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -255,26 +295,15 @@ namespace The_Four_DressOut_Web.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("The_Four_DressOut_Web.Model.Order", b =>
-                {
-                    b.HasOne("The_Four_DressOut_Web.Model.User", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("The_Four_DressOut_Web.Model.OrderItem", b =>
                 {
-                    b.HasOne("The_Four_DressOut_Web.Model.Order", "Order")
+                    b.HasOne("The_Four_DressOut_Web.Model.Orders", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("The_Four_DressOut_Web.Model.Product", "Product")
+                    b.HasOne("The_Four_DressOut_Web.Model.Products", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -285,7 +314,18 @@ namespace The_Four_DressOut_Web.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("The_Four_DressOut_Web.Model.Product", b =>
+            modelBuilder.Entity("The_Four_DressOut_Web.Model.Orders", b =>
+                {
+                    b.HasOne("The_Four_DressOut_Web.Model.User", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("The_Four_DressOut_Web.Model.Products", b =>
                 {
                     b.HasOne("The_Four_DressOut_Web.Model.Category", "Category")
                         .WithMany("Products")
@@ -309,7 +349,7 @@ namespace The_Four_DressOut_Web.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("The_Four_DressOut_Web.Model.Order", b =>
+            modelBuilder.Entity("The_Four_DressOut_Web.Model.Orders", b =>
                 {
                     b.Navigation("OrderItem");
 

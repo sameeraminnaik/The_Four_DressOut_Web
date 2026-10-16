@@ -1,60 +1,54 @@
-const BASE_URL = "http://localhost:5128/api";
+import axios from "axios";
+
+export const api = axios.create({
+  baseURL: "https://localhost:7256/api",
+});
 
 const getToken = () => localStorage.getItem("token");
 
-export const placeOrder = async () => {
+api.interceptors.request.use((config) => {
   const token = getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
-  if(!token ){
+export const placeOrder = async () => {
+  if (!getToken()) {
     throw new Error("You must be logged in to place an order.");
   }
-  const response = await fetch(`${BASE_URL}/order`, {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${getToken()}`,
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data || "Failed to place order.");
+  try {
+    const response = await api.post("/orders", {}); // empty body, token added automatically
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response?.data || "Failed to place order.");
   }
-
-  return data;
 };
 
 export const getMyOrders = async () => {
-  const response = await fetch(`${BASE_URL}/order`, {
-    method: "GET",
-    headers: {
-      "Authorization": `Bearer ${getToken()}`,
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data || "Failed to fetch orders.");
+  try {
+    const response = await api.get("/orders");
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response?.data || "Failed to fetch orders.");
   }
+};
 
-  return data;
+export const getAllOrders = async () => {
+  try {
+    const response = await api.get("/orders/all");
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response?.data || "Failed to fetch all orders.");
+  }
 };
 
 export const cancelOrder = async (orderId) => {
-  const response = await fetch(`${BASE_URL}/order/${orderId}`, {
-    method: "DELETE",
-    headers: {
-      "Authorization": `Bearer ${getToken()}`,
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data || "Failed to cancel order.");
+  try {
+    const response = await api.delete(`/orders/${orderId}`);
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response?.data || "Failed to cancel order.");
   }
-
-  return data;
 };

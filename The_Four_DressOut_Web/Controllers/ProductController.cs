@@ -125,7 +125,7 @@ namespace The_Four_DressOut_Web.Controllers
             if (category == null)
                 return BadRequest("Invalid category.");
 
-            var product = new Product
+            var product = new Products
             {
                 Name = dto.Name,
                 Description = dto.Description,
@@ -147,7 +147,7 @@ namespace The_Four_DressOut_Web.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Seller")]
-        public async Task<IActionResult> Update(int id, [FromBody] Product dto)
+        public async Task<IActionResult> Update(int id, [FromBody] Products dto)
         {
             var sellerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var product = await _context.Products.FindAsync(id);

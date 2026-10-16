@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Razorpay.Api;
 using System.Security.Claims;
 using The_Four_DressOut_Web.Context;
 using The_Four_DressOut_Web.DTO;
@@ -12,15 +13,18 @@ namespace The_Four_DressOut_Web.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class OrderController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly AppDbContext _context;
-        public OrderController(AppDbContext context)
+        public OrdersController(AppDbContext context)
         {
             _context = context;
         }
 
-        [HttpPost]
+     
+
+
+         [HttpPost]
         public async Task<IActionResult> PlaceOrder()
         {
             var customerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -41,10 +45,9 @@ namespace The_Four_DressOut_Web.Controllers
                 {
                     return BadRequest($"Not enough stock for {item.Product.Name}.");
                 }
-            }
-            ;
+            };
 
-            var order = new Order
+            var order = new Orders
             {
                 CustomerId = customerId,
                 OrderedAt = DateTime.UtcNow,
@@ -99,7 +102,7 @@ namespace The_Four_DressOut_Web.Controllers
         }
 
         [HttpGet("all")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Seller")]
         public async Task<IActionResult> GetAllOrders()
         {
             var orders = _context.Orders

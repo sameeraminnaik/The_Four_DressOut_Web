@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace The_Four_DressOut_Web.Model
 {
-    public class Product
+    public class Products
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

@@ -17,11 +17,13 @@ namespace The_Four_DressOut_Web.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(AppDbContext context, IConfiguration config)
+        public AuthController(AppDbContext context, IConfiguration config, ILogger<AuthController> logger)
         {
             _context = context;
             _config = config;
+            _logger = logger;
         }
 
         [HttpPost ("register")]
@@ -58,7 +60,8 @@ namespace The_Four_DressOut_Web.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                _logger.LogError(ex, "Error occurred while registering user.");
+                return StatusCode(500, "An internal server error occurred.");
             }
         }
 

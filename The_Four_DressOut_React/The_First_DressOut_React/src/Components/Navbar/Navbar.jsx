@@ -18,6 +18,7 @@ const Navbar = () => {
 
   const token = localStorage.getItem("token");
   const name = localStorage.getItem("name");
+  var firstName = name ? name.split(" ")[0] : ""  ;
 
   return (
     <>
@@ -26,7 +27,6 @@ const Navbar = () => {
           <img src={logo} alt="Logo" className={styles.logo} />
         </NavLink>
 
-        <div>{token ? <span>{name}</span> : null}</div>
 
         <ul className={styles.navLinks}>
           <li>
@@ -48,15 +48,22 @@ const Navbar = () => {
 
         <div className={styles.actions}>
           <input type="text" placeholder="Search..." />
+
+          <div className={styles.userGreeting}>
+            {token ? <span>{firstName}</span> : null}
+          </div>
+
           {!token ? (
-            <NavLink className={styles.loginBtn} to="/login">
+            <NavLink to="/login">
               <button className={styles.cartBtn}>Login</button>
             </NavLink>
           ) : (
+            
             <button className={styles.cartBtn} onClick={handleLogOut}>
               LogOut
             </button>
           )}
+          
           <NavLink to="/cart">
             <button className={styles.cartBtn}>Cart</button>
           </NavLink>

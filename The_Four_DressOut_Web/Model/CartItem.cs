@@ -12,7 +12,7 @@ namespace The_Four_DressOut_Web.Model
         public User? Customer { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
-        public Product? Product { get; set; }
+        public Products? Product { get; set; }
         public string Size { get; set; } = string.Empty;
         public string Color { get; set; } = string.Empty;
         public int Quantity { get; set; }

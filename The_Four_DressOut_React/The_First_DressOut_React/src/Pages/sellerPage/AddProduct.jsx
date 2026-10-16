@@ -2,26 +2,13 @@ import React, { useEffect, useState } from "react";
 import styles from "./AddProduct.module.css";
 import { NavLink } from "react-router-dom";
 import { addProduct, getAllCategories } from "../../Api/sellerApi";
-import cart from "../../Assets/cartTemp.webp";
-import order from "../../Assets/orderTemp.png";
-import revenue from "../../Assets/salesTemp.webp";
-import rating from "../../Assets/ratingTemp.png";
-import lowStock from "../../Assets/lowCostTemp.webp";
+
 import products from "../../Data/products";
+import Navbar from "./components/Navbar";
 
 const AddProduct = () => {
   const [image, setImage] = useState(null);
   const [categories, setCategories] = useState([]);
-
-  const [countProducts, setCountProducts] = useState(0);
-
-  const loadProducts = async () => {
-    const res = await products();
-    setCountProducts(res.length);
-  }
-  useEffect(() => {
-    loadProducts();
-  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -38,7 +25,6 @@ const AddProduct = () => {
     getAllCategories().then((res) => setCategories(res.data));
   }, []);
 
-  console.log("Form Data:", formData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -92,52 +78,7 @@ const AddProduct = () => {
 };
   return (
     <>
-      <div className={styles.dashboard}>
-        <div className={styles.main}>
-          <div>
-            <img src={cart} alt="Cart" />
-            <h3>Total Products</h3>
-            <h1>{countProducts}</h1>
-          </div>  
-        </div>
-      </div>
-
-      <div className={styles.dashboard}>
-        <div className={styles.main}>
-          <div>
-            <img src={order} alt="Order" />
-            <h3>Total Orders</h3>
-          </div>  
-        </div>
-      </div>
-
-      <div className={styles.dashboard}>
-        <div className={styles.main}>
-          <div>
-            <img src={revenue} alt="Revenue" />
-            <h3>Total Revenues</h3>
-          </div>  
-        </div>
-      </div>
-
-      <div className={styles.dashboard}>
-        <div className={styles.main}>
-          <div>
-            <img src={rating} alt="Rating" />
-            <h3>Average Rating</h3>
-          </div>  
-        </div>
-      </div>
-
-      <div className={styles.dashboard}>
-        <div className={styles.main}>
-          <div>
-            <img src={lowStock} alt="Low Stock" />
-            <h3>Low Stock Products</h3>
-          </div>  
-        </div>
-      </div>
-
+      <Navbar/>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           type="text"

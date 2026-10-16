@@ -57,6 +57,7 @@ const Login = () => {
       const role =localStorage.setItem("role", data.role);
 
       alert(`Welcome back, ${data.name}!`);
+      return (`Welcome back, ${data.name}!`);
       navigate("/")
     } catch (error) {
       alert(error.response?.data || "Invalid email or password");
